@@ -33,8 +33,8 @@ RUN set -x \
   && apk --update add --no-cache --virtual .nomad-deps gnupg curl \
   && cd /tmp \
   && curl -L -o nomad_${NOMAD_VERSION}_linux_amd64.zip https://cdn.aws.robloxlabs.com/nomad/${NOMAD_VERSION}/nomad-enterprise_${NOMAD_VERSION}%2bent_linux_amd64.zip\
-  && curl -L -o nomad_${NOMAD_VERSION}_SHA256SUMS      https://cdn.aws.robloxlabs.com/nomad/${NOMAD_VERSION}/nomad-enterprise_${NOMAD_VERSION}%2bent_linux_amd64.zip\
-  && curl -L -o nomad_${NOMAD_VERSION}_SHA256SUMS.sig  https://cdn.aws.robloxlabs.com/nomad/${NOMAD_VERSION}/nomad-enterprise_${NOMAD_VERSION}%2bent_linux_amd64.zip\
+  && curl -L -o nomad_${NOMAD_VERSION}_SHA256SUMS      https://cdn.aws.robloxlabs.com/nomad/${NOMAD_VERSION}/nomad-enterprise_${NOMAD_VERSION}%2bent_SHA256SUMS\
+  && curl -L -o nomad_${NOMAD_VERSION}_SHA256SUMS.sig  https://cdn.aws.robloxlabs.com/nomad/${NOMAD_VERSION}/nomad-enterprise_${NOMAD_VERSION}%2bent_SHA256SUMS.sig\
   && export GNUPGHOME="$(mktemp -d)" \
   && gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 91A6E7F85D05C65630BEF18951852D87348FFC4C \
   && gpg --batch --verify nomad_${NOMAD_VERSION}_SHA256SUMS.sig nomad_${NOMAD_VERSION}_SHA256SUMS \
