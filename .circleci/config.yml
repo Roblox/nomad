@@ -1,0 +1,25 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: 'djenriquez/nomad:latest'
+      enviroment:
+      - NOMAD_VERSION: "0.9.7"
+      working_directory: /mnt
+      
+       - checkout
+       - setup_remote_docker
+       - run: 
+           name: Docker Build
+           command: |
+               cd 0.9.7/$NOMAD_VERSION
+               docker build --rm=false -t cloud-registry.simulprod.com/nomad-enterprise:latest . 
+               docker tag cloud-registry.simulprod.com/nomad-enterprise:latest cloud-registry.simulprod.com/nomad-enterprise:0.9.7
+               docker tag cloud-registry.simulprod.com/nomad-enterprise:latest cloud-registry.simulprod.com/nomad-enterprise:$NOMAD_VERSION
+    
+        - run:
+            name: Docker publish
+            command: |
+              docker push cloud-registry.simulprod.com/nomad-enterprise:latest
+              docker push cloud-registry.simulprod.com/nomad-enterprise:0.9.7
+              docker push cloud-registry.simulprod.com/nomad-enterprise:$NOMAD_VERSION
